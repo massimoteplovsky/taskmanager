@@ -1,0 +1,17 @@
+{
+  "name": "taskmanager-project",
+  "version": "12.0.0",
+  "private": true,
+  "description": "Менеджер задач",
+  "scripts": {
+    "eslint": "eslint src/**/*.js",
+    "test": "npm run eslint"
+  },
+  "devDependencies": {
+    "eslint": "7.3.1",
+    "eslint-config-htmlacademy": "0.5.2"
+  },
+  "engines": {
+    "node": "12"
+  }
+}
