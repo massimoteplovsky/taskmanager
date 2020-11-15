@@ -1,5 +1,22 @@
 import {COLORS} from "../const.js";
-import {isTaskExpired, isTaskRepeating, humanizeTaskDueDate} from "../utils.js";
+import {isTaskExpired, isTaskRepeating, humanizeTaskDueDate, createElement} from "../utils.js";
+
+const BLANK_TASK = {
+  color: COLORS[0],
+  description: ``,
+  dueDate: null,
+  repeating: {
+    mo: false,
+    tu: false,
+    we: false,
+    th: false,
+    fr: false,
+    sa: false,
+    su: false
+  },
+  isArchive: false,
+  isFavorite: false
+};
 
 const createTaskEditRepeatingTemplate = (repeating) => {
   return (
@@ -45,35 +62,21 @@ const createTaskEditDateTemplate = (dueDate) => {
 
 const createTaskEditColorsTemplate = (currentColor) => {
 
-  return COLORS.map((color) => `<input
-    type="radio"
-    id="color-${color}"
-    class="card__color-input card__color-input--${color} visually-hidden"
-    name="color"
-    value="${color}"
-    ${currentColor === color ? `checked` : ``}
-  />
-  <label
-    for="color-${color}"
-    class="card__color card__color--${color}"
-    >${color}</label
-  >`).join(``);
+  return COLORS.map((color) => (
+    `<input
+      type="radio"
+      id="color-${color}"
+      class="card__color-input card__color-input--${color} visually-hidden"
+      name="color"
+      value="${color}"
+      ${currentColor === color ? `checked` : ``}
+    />
+    <label for="color-${color}" class="card__color card__color--${color}">${color}</label
+  >`)).join(``);
 };
 
-export const createTaskEditTemplate = ({
-  color = `black`,
-  description = ``,
-  dueDate = null,
-  repeating = {
-    mo: false,
-    tu: false,
-    we: false,
-    th: false,
-    fr: false,
-    sa: false,
-    su: false
-  }
-}) => {
+const createTaskEditTemplate = (task) => {
+  const {color, description, dueDate, repeating} = task;
   const deadlineClassName = isTaskExpired(dueDate) ? `card--deadline` : ``;
   const dateTemplate = createTaskEditDateTemplate(dueDate);
   const repeatingClassName = isTaskRepeating(repeating) ? `card--repeat` : ``;
@@ -125,3 +128,26 @@ export const createTaskEditTemplate = ({
     </article>`
   );
 };
+
+export default class TaskEdit {
+  constructor(task) {
+    this._task = task || BLANK_TASK;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createTaskEditTemplate(this._task);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
