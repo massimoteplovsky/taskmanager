@@ -1,5 +1,5 @@
 import {COLORS} from "../const.js";
-import {getRandomInteger} from "../utils.js";
+import {getRandomInteger} from "../utils/common.js";
 
 const generateDescription = () => {
   const descriptions = [
@@ -12,6 +12,8 @@ const generateDescription = () => {
 
   return descriptions[randomIndex];
 };
+
+const generateId = () => Date.now() + parseInt(Math.random() * 10000, 10);
 
 const generateDate = () => {
   const isDate = Boolean(getRandomInteger(0, 1));
@@ -60,6 +62,7 @@ export const generateTask = () => {
       su: false
     };
   return {
+    id: generateId(),
     description: generateDescription(),
     dueDate,
     repeating,
