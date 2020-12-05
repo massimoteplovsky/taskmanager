@@ -1,6 +1,6 @@
 import moment from "moment";
 
-const getCurrentDate = () => {
+export const getCurrentDate = () => {
   const currentDate = new Date();
   currentDate.setHours(23, 59, 59, 999);
 
@@ -14,17 +14,26 @@ export const isTaskExpired = (dueDate) => {
 
   const currentDate = getCurrentDate();
 
-  return currentDate.getTime() > dueDate.getTime();
+  return moment(currentDate).isAfter(dueDate, `day`);
 };
 
 export const isTaskExpiringToday = (dueDate) => {
+
   if (dueDate === null) {
     return false;
   }
 
   const currentDate = getCurrentDate();
 
-  return currentDate.getTime() === dueDate.getTime();
+  return moment(dueDate).isSame(currentDate, `day`);
+};
+
+export const isDatesEqual = (dateA, dateB) => {
+  if (dateA === null && dateB === null) {
+    return true;
+  }
+
+  return moment(dateA).isSame(dateB, `day`);
 };
 
 export const isTaskRepeating = (repeating) => {

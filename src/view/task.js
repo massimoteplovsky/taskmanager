@@ -1,3 +1,4 @@
+import he from "he";
 import Abstract from "./abstract";
 import {isTaskExpired, isTaskRepeating, formatTaskDueDate} from "../utils/task.js";
 
@@ -41,7 +42,7 @@ const createTaskTemplate = ({
           </div>
 
           <div class="card__textarea-wrap">
-            <p class="card__text">${description}</p>
+            <p class="card__text">${he.encode(description)}</p>
           </div>
 
           <div class="card__settings">
