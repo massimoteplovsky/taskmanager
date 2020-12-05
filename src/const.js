@@ -26,3 +26,17 @@ export const FilterType = {
   REPEATING: `repeating`,
   ARCHIVE: `archive`
 };
+
+export const MenuItem = {
+  ADD_NEW_TASK: `ADD_NEW_TASK`,
+  TASKS: `TASKS`,
+  STATISTICS: `STATISTICS`
+};
+
+export const Color = {
+  BLACK: `black`,
+  YELLOW: `yellow`,
+  BLUE: `blue`,
+  GREEN: `green`,
+  PINK: `pink`
+};
